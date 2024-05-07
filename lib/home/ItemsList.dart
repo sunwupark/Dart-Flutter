@@ -18,16 +18,16 @@ class ItemsList extends StatefulWidget {
 class _ItemsListState extends State<ItemsList> {
   List<String> products = [];
   List<CustomItem> items = [
-    CustomItem(name: 'Item3', price: '\$12.3', imgPath: 'assets/item3.jpeg'),
-    CustomItem(name: 'Item4', price: '\$10.99', imgPath: 'assets/item4.jpeg'),
+    CustomItem(name: '스킨케어 크림', price: '\$12.3', imgPath: 'assets/item3.jpeg'),
+    CustomItem(name: '마사지 크림', price: '\$10.99', imgPath: 'assets/item4.jpeg'),
   ];
   List<CustomItem> columns = [
-    CustomItem(name: 'columns', price: '\$12.3', imgPath: 'assets/item3.jpeg'),
-    CustomItem(name: 'column', price: '\$10.99', imgPath: 'assets/item4.jpeg'),
+    CustomItem(name: '효과적인 ‘림프 마사지’ 방법', price: '', imgPath: 'assets/limpmas.jpeg'),
+    CustomItem(name: '[김태권의 건강칼럼3]', price: '', imgPath: 'assets/footmas.jpeg'),
   ];
   List<CustomItem> daily = [
-    CustomItem(name: 'daily', price: '\$12.3', imgPath: 'assets/item3.jpeg'),
-    CustomItem(name: 'daily', price: '\$10.99', imgPath: 'assets/item4.jpeg'),
+    CustomItem(name: '오늘의 문제!', price: '', imgPath: 'assets/questionmark.png'),
+    CustomItem(name: '답은???', price: '', imgPath: 'assets/why.png'),
   ];
 
   @override
@@ -136,11 +136,46 @@ class _ItemsListState extends State<ItemsList> {
         padding: const EdgeInsets.all(5),
         child: InkWell(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ItemDetail(
-                      assetPath: item.imgPath,
-                      cookieprice: item.price,
-                      cookiename: item.name)));
+              if(title == 'RECENT'){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                    ItemDetail(
+                        assetPath: item.imgPath,
+                        cookieprice: item.price,
+                        cookiename: item.name
+                    )
+                  ));
+              }
+              else if(title == "POPULAR"){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                    ColumnDetail(
+                        assetPath: item.imgPath,
+                        cookieprice: item.price,
+                        cookiename: item.name
+                    )
+                  ));
+              }
+              else if(title == "DAILY"){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                    ColumnDetail(
+                        assetPath: item.imgPath,
+                        cookieprice: item.price,
+                        cookiename: item.name
+                    )
+                  ));
+              }
+              else{
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                    ItemDetail(
+                        assetPath: item.imgPath,
+                        cookieprice: item.price,
+                        cookiename: item.name
+                    )
+                  ));
+              }
             },
             child: Container(
                 decoration: BoxDecoration(
@@ -176,39 +211,107 @@ class _ItemsListState extends State<ItemsList> {
                       color: const Color(0xFFEBEBEB),
                       height: 1.0),
                   const SizedBox(height: 5),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(item.price,
-                            style: TextStyle(
-                                color: Colors.red[700], fontSize: 14.0)),
-                        SizedBox(width: 10.0), // 여기에 원하는 크기의 공간을 추가합니다.
-                        Text(item.name,
-                            style: TextStyle(
-                                color: Color(0xFF575E67), fontSize: 14.0)),
-                      ]),
-                  SizedBox(height: 5.0),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    RatingBarIndicator(
-                      rating: 3.5,
-                      itemBuilder: (context, index) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      itemCount: 5,
-                      itemSize: 10.0,
-                      direction: Axis.horizontal,
-                    ),
-                    Text('3.5점 (500명)'),
-                  ]),
-                  Text('정가 ${item.price}',
-                      style: TextStyle(
-                          color: Color(0xFF575E67),
-                          fontFamily: 'Varela',
-                          fontSize: 14.0)),
+                  buildItemWidget(item, title)
                 ]))));
   }
 }
+
+Widget buildItemWidget(CustomItem item, String type) {
+  if (type == 'RECENT') {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              item.price,
+              style: TextStyle(
+                color: Colors.red[700],
+                fontSize: 14.0,
+              ),
+            ),
+            SizedBox(width: 10.0),
+            Text(
+              item.name,
+              style: TextStyle(
+                color: Color(0xFF575E67),
+                fontSize: 14.0,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RatingBarIndicator(
+              rating: 3.5,
+              itemBuilder: (context, index) => Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              itemCount: 5,
+              itemSize: 10.0,
+              direction: Axis.horizontal,
+            ),
+            Text('3.5점 (500명)'),
+          ],
+        ),
+      ],
+    );
+  } else if (type == 'POPULAR') {
+    // "POPULAR"에 따른 다른 형태의 위젯을 반환
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              item.name,
+              style: TextStyle(
+                color: Color(0xFF575E67),
+                fontSize: 14.0,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('조회수: 500명'),
+          ],
+        ),
+      ],
+    );
+  } else {
+    // 기본 타입 또는 알 수 없는 타입의 경우 반환
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              item.name,
+              style: TextStyle(
+                color: Color(0xFF575E67),
+                fontSize: 14.0,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('답변수: 1000명'),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 
 class CustomItem {
   final String name;
