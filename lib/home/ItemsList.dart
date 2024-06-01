@@ -5,6 +5,7 @@ import '../ItemDetails.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:calmvas/ColumnDetails.dart';
 
 class ItemsList extends StatefulWidget {
   final String title;
@@ -34,30 +35,21 @@ class _ItemsListState extends State<ItemsList> {
   void initState() {
     super.initState();
     String title = widget.title;
-    fetchItems();
+    // fetchItems();
     setState(() {
       products;
     });
   }
 
-  Future<void> fetchItems({name = String}) async {
-    // you can replace your api link with this link
-    final response = await http.get(Uri.parse('http://localhost:3000/' + name));
-    if (response.statusCode == 200) {
-      List<dynamic> jsonData = json.decode(response.body);
-      for (var i = 0; i < jsonData.length; i++) {
-        var response2 = await http
-            .get(Uri.parse('http://localhost:3000/${name}/${jsonData[i]}'));
-        if (response2.statusCode == 200) {
-          print(json.decode(response2.body)["publicUrl"]);
-          print("WIRKI?NG?");
-          products.add(json.decode(response2.body)["publicUrl"]);
-        }
-      }
-    } else {
-      // Handle error if needed
-    }
-  }
+  // Future<void> fetchItems({name = String}) async {
+  //   // you can replace your api link with this link
+  //   final response = await http.get(Uri.parse('http://localhost:3000/' + name));
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> jsonData = json.decode(response.body);
+      
+  //   }
+    
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -149,20 +141,33 @@ class _ItemsListState extends State<ItemsList> {
               else if(title == "POPULAR"){
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
-                    ColumnDetail(
+                    TextInputPage(
                         assetPath: item.imgPath,
-                        cookieprice: item.price,
-                        cookiename: item.name
+                        cookiePrice: item.price,
+                        cookieName: item.name,
+                        quiz: false
                     )
                   ));
               }
-              else if(title == "DAILY"){
+              else if(title == "DAILY" && item.name == '오늘의 문제!'){
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
-                    ColumnDetail(
+                    TextInputPage(
                         assetPath: item.imgPath,
-                        cookieprice: item.price,
-                        cookiename: item.name
+                        cookiePrice: item.price,
+                        cookieName: item.name,
+                        quiz: true,
+                    )
+                  ));
+              }
+              else if(title == "DAILY" && item.name == '답은???'){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                    TextInputPage(
+                        assetPath: item.imgPath,
+                        cookiePrice: item.price,
+                        cookieName: item.name,
+                        quiz: false
                     )
                   ));
               }

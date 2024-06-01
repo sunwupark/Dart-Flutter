@@ -18,7 +18,7 @@ class ItemDetail extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
-        title: Text('Pickup',
+        title: Text('ShopCart',
             style: TextStyle(
                 fontFamily: 'Varela',
                 fontSize: 20.0,
@@ -34,7 +34,7 @@ class ItemDetail extends StatelessWidget {
         SizedBox(height: 16.0),
         Padding(
           padding: EdgeInsets.only(left: 20.0),
-          child: Text('Shoes',
+          child: Text('Items',
               style: TextStyle(
                   fontSize: 42.0,
                   fontWeight: FontWeight.bold,
@@ -43,7 +43,7 @@ class ItemDetail extends StatelessWidget {
         const SizedBox(height: 15.0),
         Hero(
             tag: assetPath,
-            child: Image.asset(assetPath,
+            child: Image.network(assetPath,
                 height: 150.0, width: 100.0, fit: BoxFit.contain)),
         SizedBox(height: 20.0),
         Center(

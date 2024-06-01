@@ -14,36 +14,35 @@ class AllItems extends StatefulWidget {
 }
 
 class _AllItemsListState extends State<AllItems> {
-  List<String> products = [];
+  late String title;
+  List<dynamic> products = [];
+
+  _AllItemsListState() {
+    products = [];
+  }
 
   @override
   void initState() {
     super.initState();
-    String title = widget.title;
-    print("dfjiadjfoidshfasjfds" + widget.title);
-    fetchItems();
-    setState(() {products;});
+    title = widget.title;
+    fetchItems(name: title).then((value) {
+    setState(() {
+      products = value;
+    });
+  });
   }
 
-  Future<void> fetchItems({name=String}) async {
+  Future<List<dynamic>> fetchItems({name=String}) async {
     // you can replace your api link with this link
-    final response = await http.get(Uri.parse('http://localhost:3000/' + name));
+    final response = await http.get(Uri.parse('http://localhost:8080/' + name.toString().toLowerCase() + '/search/all'));
     if (response.statusCode == 200) {
-      List<dynamic> jsonData = json.decode(response.body);
-      for (var i = 0; i < jsonData.length; i++) {
-        var response2 = await http.get(Uri.parse('http://localhost:3000/${name}/${jsonData[i]}'));
-        if (response2.statusCode == 200) {
-          print(json.decode(response2.body)["publicUrl"]);
-          print("WIRKI?NG?");
-          print("dfjiadjfoidshfasjfds" + widget.title);
-          products.add(json.decode(response2.body)["publicUrl"]);
-        }
-      }
-    } else {
-      // Handle error if needed
+      List<dynamic> jsonData = json.decode(utf8.decode(response.bodyBytes))["recents"];
+      return jsonData;
     }
+    return [];
   }
-
+  
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -76,34 +75,39 @@ class _AllItemsListState extends State<AllItems> {
           padding: EdgeInsets.all(5.0),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: GridView.count(
-            crossAxisCount: 2,
-            primary: false,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 15.0,
-            childAspectRatio: 0.8,
-            shrinkWrap: true,
-            children: List.generate(
-              8, // 8개의 카드를 생성
-              (index) => _buildCard(
-                ['Black', 'Red-Black', 'Jungle classic', 'Black-Gray'][index % 4],
-                '\$129.99',
-                ['assets/black.png', 'assets/red-black.png', 'assets/jungle.png', 'assets/black-gray.png'][index % 4],
-                index % 2 == 0,
-                index % 4 == 2,
-                context,
-              ),
-            ),
-  ),
+          child: products.isNotEmpty
+              ? GridView.count(
+                  crossAxisCount: 2,
+                  primary: false,
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 15.0,
+                  childAspectRatio: 0.8,
+                  shrinkWrap: true,
+                  children: List.generate(
+                    products.length,
+                    (index) => _buildCard(
+                      products[index]['title'],
+                      products[index]["price"].toString(),
+                      products[index]['image'],
+                      products[index]['rating'],
+                      products[index]['count'].toString(),
+                      index % 2 == 0,
+                      index % 4 == 2,
+                      context,
+                    ),
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
 )
-
       )
     );
   }
 }
 
 
-Widget _buildCard(String name, String price, String imgPath, bool added,
+Widget _buildCard(String name, String price, String imgPath, double rating, String count, bool added,
     bool isFavorite, context) {
   return Padding(
       padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
@@ -138,14 +142,34 @@ Widget _buildCard(String name, String price, String imgPath, bool added,
                               color: Colors.red[700])
                         ])),
                 Hero(
-                    tag: imgPath,
-                    child: Container(
+                  tag: imgPath,
+                  child: Image.network(
+                    imgPath,
+                    height: 95.0,
+                    width: 150.0,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
                         height: 95.0,
                         width: 150.0,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(imgPath),
-                                fit: BoxFit.contain)))),
+                        color: Colors.grey[300],
+                        child: Center(
+                          child: Icon(Icons.error, color: Colors.grey[600]),
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Container(color: Color(0xFFEBEBEB), height: 1.0)),
@@ -169,7 +193,7 @@ Widget _buildCard(String name, String price, String imgPath, bool added,
                 Row( mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   RatingBarIndicator(
-                    rating: 3.5,
+                    rating: rating,
                     itemBuilder: (context, index) => Icon(
                       Icons.star,
                       color: Colors.amber,
@@ -178,7 +202,7 @@ Widget _buildCard(String name, String price, String imgPath, bool added,
                     itemSize: 10.0,
                     direction: Axis.horizontal,
                   ),
-                  Text('3.5점 (500명)'),
+                  Text(rating.toString() + "(점) " + count + "개"),
                 ]),
                 Text('정가 ${price}',
                   style: TextStyle(

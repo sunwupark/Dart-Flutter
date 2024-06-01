@@ -17,22 +17,22 @@ class _HomeCarouselState extends State<HomeCarousel> {
   @override
   void initState() {
     super.initState();
-    fetchAdvertisement();
+    // fetchAdvertisement();
     setState(() {
       products;
     });
   }
 
-  Future<void> fetchAdvertisement() async {
-    // you can replace your api link with this link
-    for (var i = 1; i <= 3; i++) {
-      var response =
-          await http.get(Uri.parse('http://localhost:3000/advertisement/${i}'));
-      if (response.statusCode == 200) {
-        products.add(json.decode(response.body)['image']);
-      }
-    }
-  }
+  // Future<void> fetchAdvertisement() async {
+  //   // you can replace your api link with this link
+  //   for (var i = 1; i <= 3; i++) {
+  //     var response =
+  //         await http.get(Uri.parse('http://localhost:3000/advertisement/${i}'));
+  //     if (response.statusCode == 200) {
+  //       products.add(json.decode(response.body)['image']);
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
