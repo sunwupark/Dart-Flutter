@@ -1,16 +1,48 @@
-# calmvas
+# Calmvas Frontend
 
-A new Flutter project.
+Calmvas Frontend는 마사지 및 웰빙에 중점을 둔 커뮤니티와 쇼핑 플랫폼의 Flutter 앱입니다. 이 앱은 사용자가 다양한 부위(EYES, FACE, CHIN, CHEEK)에 대한 마사지 기술을 공유하고, 다양한 웰빙 제품을 구매할 수 있는 기능을 제공합니다. 또한, 사용자는 '오늘의 문제' 기능을 통해 일상의 소소한 문제에 대한 해결책을 제공받을 수 있습니다.
 
-## Getting Started
+## 주요 기능
 
-This project is a starting point for a Flutter application.
+- **마사지 게시판**: 사용자는 눈, 얼굴, 턱, 볼 등 다양한 부위에 대한 마사지 기술을 공유하고 토론할 수 있습니다.
+- **쇼핑**: 다양한 웰빙 제품을 구매할 수 있는 기능을 제공합니다.
+- **오늘의 문제**: 사용자는 일상 생활에서 마주칠 수 있는 소소한 문제에 대한 해결책을 제공받을 수 있습니다.
 
-A few resources to get you started if this is your first Flutter project:
+## 기술 스택
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+이 프로젝트는 다음 기술들을 사용하여 구축되었습니다:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Frontend**: Flutter
+- **Backend 연결**: Spring Boot
+
+## 시작하기
+
+로컬 환경에서 프로젝트를 실행하는 단계입니다.
+
+### 사전 준비사항
+
+- Flutter가 설치되어 있어야 합니다.
+- Android Studio 또는 Visual Studio Code와 같은 IDE가 설치되어 있어야 합니다.
+
+### 설치 방법
+
+1. 저장소 복제하기.
+
+```bash
+git clone [저장소 URL]
+cd calmvas-frontend
+```
+
+2. 필요한 Flutter 패키지 설치하기.
+
+```bash
+flutter pub get
+```
+
+3. 앱 실행하기.
+
+```bash
+flutter run
+```
+
+이 명령을 사용하면 개발자의 기기나 에뮬레이터에서 앱이 실행됩니다. 앱이 실행되면, 사용자는 마사지 게시판을 이용하거나 제품을 구매하고, 오늘의 문제를 확인할 수 있습니다.

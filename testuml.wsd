@@ -1,0 +1,61 @@
+@startuml test
+
+class Main.dart {
+    +HomePage(): class
+    +BodyPage(): class
+}
+
+class HomePage.dart {
+    +HomeCarousel: class
+    +HomeTabBar: class
+    +HomeTabBarView: class
+}
+
+class BodyPage.dart {
+    +BodyItem: class
+}
+
+class BodyItem.dart {
+    +BodyItemDetail: class
+}
+
+class BodyItemDetail.dart {
+    +build: Widget
+}
+
+class HomeTabBarView.dart {
+    +ItemList: class
+}
+
+class HomeTabBar.dart {
+    +build: Widget
+}
+
+class HomeCarousel.dart {
+    +build: Widget
+}
+
+class ItemList.dart {
+    +AllItemList: class
+}
+
+class AllItemList.dart {
+    +ItemDetail: class
+}
+
+class ItemDetail.dart {
+    +build: Widget
+}
+
+Main.dart --> HomePage.dart
+Main.dart --> BodyPage.dart
+HomePage.dart --> HomeCarousel.dart
+HomePage.dart --> HomeTabBar.dart
+HomePage.dart --> HomeTabBarView.dart
+HomeTabBarView.dart --> ItemList.dart
+ItemList.dart --> AllItemList.dart
+AllItemList.dart --> ItemDetail.dart
+BodyPage.dart --> BodyItem.dart
+BodyItem.dart --> BodyItemDetail.dart
+
+@enduml
