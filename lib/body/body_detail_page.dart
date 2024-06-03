@@ -40,7 +40,7 @@ class _BodyDetailState extends State<BodyDetailPage> {
   
   Future<List<dynamic>> fetchItems({name = String}) async {
     // you can replace your api link with this link
-    final response = await http.get(Uri.parse('http://localhost:8080/post/search/category/' + name));
+    final response = await http.get(Uri.parse('http://dungdungcloud.shop:8080/post/search/category/' + name));
     if (response.statusCode == 200) {
       // print(response.body);
       List<dynamic> jsonData = json.decode(utf8.decode(response.bodyBytes))["posts"];

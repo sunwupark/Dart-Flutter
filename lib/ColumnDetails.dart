@@ -54,7 +54,7 @@ class _TextInputPageState extends State<TextInputPage> {
         const SizedBox(height: 15.0),
         Hero(
             tag: widget.assetPath,
-            child: Image.asset(widget.assetPath,
+            child: Image.network(widget.assetPath,
                 height: 150.0, width: 100.0, fit: BoxFit.contain)),
         SizedBox(height: 20.0),
         Center(

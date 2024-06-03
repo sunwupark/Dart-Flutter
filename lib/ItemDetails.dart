@@ -67,7 +67,7 @@ class ItemDetail extends StatelessWidget {
           child: Container(
             width: MediaQuery.of(context).size.width - 50.0,
             child: Text(
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard',
+                '스킨케어 크림 한줄 소개 \n 스킨케어 크림은 피부에 필수적인 영양분을 공급하여 수분 보충, 주름 개선, 피부 활력 증진 등의 다양한 효과를 제공하는 필수 스킨케어 아이템입니다. 🌟',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'Varela',

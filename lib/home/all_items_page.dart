@@ -34,7 +34,7 @@ class _AllItemsListState extends State<AllItems> {
 
   Future<List<dynamic>> fetchItems({name=String}) async {
     // you can replace your api link with this link
-    final response = await http.get(Uri.parse('http://localhost:8080/' + name.toString().toLowerCase() + '/search/all'));
+    final response = await http.get(Uri.parse('http://dungdungcloud.shop:8080/' + name.toString().toLowerCase() + '/search/all'));
     if (response.statusCode == 200) {
       List<dynamic> jsonData = json.decode(utf8.decode(response.bodyBytes))["recents"];
       return jsonData;

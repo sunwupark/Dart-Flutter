@@ -19,16 +19,16 @@ class ItemsList extends StatefulWidget {
 class _ItemsListState extends State<ItemsList> {
   List<String> products = [];
   List<CustomItem> items = [
-    CustomItem(name: '스킨케어 크림', price: '\$12.3', imgPath: 'assets/item3.jpeg'),
-    CustomItem(name: '마사지 크림', price: '\$10.99', imgPath: 'assets/item4.jpeg'),
+    CustomItem(name: '스킨케어 크림', price: '\$12.3', imgPath: 'https://rmwiqrerffapmjylrcir.supabase.co/storage/v1/object/public/items_image/item3.jpeg?t=2024-06-01T18%3A24%3A26.826Z'),
+    CustomItem(name: '마사지 크림', price: '\$10.99', imgPath: 'https://rmwiqrerffapmjylrcir.supabase.co/storage/v1/object/public/items_image/item4.jpeg'),
   ];
   List<CustomItem> columns = [
-    CustomItem(name: '효과적인 ‘림프 마사지’ 방법', price: '', imgPath: 'assets/limpmas.jpeg'),
-    CustomItem(name: '[김태권의 건강칼럼3]', price: '', imgPath: 'assets/footmas.jpeg'),
+    CustomItem(name: '효과적인 ‘림프 마사지’ 방법', price: '', imgPath: 'https://rmwiqrerffapmjylrcir.supabase.co/storage/v1/object/public/items_image/limpmas.jpeg'),
+    CustomItem(name: '[김태권의 건강칼럼3]', price: '', imgPath: 'https://rmwiqrerffapmjylrcir.supabase.co/storage/v1/object/public/items_image/footmas.jpeg'),
   ];
   List<CustomItem> daily = [
-    CustomItem(name: '오늘의 문제!', price: '', imgPath: 'assets/questionmark.png'),
-    CustomItem(name: '답은???', price: '', imgPath: 'assets/why.png'),
+    CustomItem(name: '오늘의 문제!', price: '', imgPath: 'https://rmwiqrerffapmjylrcir.supabase.co/storage/v1/object/public/items_image/questionmark.png?t=2024-06-02T03%3A36%3A10.430Z'),
+    CustomItem(name: '답은???', price: '', imgPath: 'https://rmwiqrerffapmjylrcir.supabase.co/storage/v1/object/public/items_image/why.png?t=2024-06-02T03%3A36%3A02.953Z'),
   ];
 
   @override
@@ -205,7 +205,7 @@ class _ItemsListState extends State<ItemsList> {
                           ])),
                   Hero(
                       tag: item.imgPath,
-                      child:  Image.asset(
+                      child:  Image.network(
                               item.imgPath,
                               height: 95,
                               width: 150,
